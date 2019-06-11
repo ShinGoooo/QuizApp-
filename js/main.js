@@ -15,22 +15,20 @@
     var score = 0;
     var count = 0;
     var answs = [];
-      //get API
     fetch('https://opentdb.com/api.php?amount=10')
     .then(response =>{
       return response.json();
     })
     .then(data =>{
-      //shuffle when page loading
+      // オブジェクトをシャッフル
       var objectKeysShuffled = function(dataresults){
         return shuffle(Object.keys(data.results));
       }
         setQuiz();
-     //set Quiz
+     //クイズをセットする処理
      function setQuiz(){
        var qsCount = count+1;
-       console.log(data.results[count]);// test output data.results[0]
-       // take a "data.results[count]"
+       console.log(data.results[count]);//テストアウトプット
        genre.innerText ="[ジャンル] "+data.results[count].category;
        genre.style.display="block";
        diff.innerText ="[難易度] "+data.results[count].difficulty;
@@ -38,10 +36,9 @@
        qs.innerText = data.results[count].question;
        qsNum.innerText="問題"+qsCount;
        buildAnsChoises();
-         // press answs btn
+         //回答選択肢押下時処理
        for(var i=0; i<btn.length;i++){
            btn[i].addEventListener('click',function(){
-             // quizes is done
            if(this.value===data.results[count].correct_answer){
              score++;
              count++;
@@ -60,15 +57,15 @@
          });
        }
      }
-     //  create answer choices
+     //  回答選択肢作成処理
      function buildAnsChoises(){
-         // add correct_answer to answs
+         // correct_answerを配列answsへプッシュ
        answs.push(data.results[count].correct_answer);
-       //ad incorrect_answers to answs
+       //incorrect_answersを配列answsへプッシュ
        for(var i=0;i<data.results[count].incorrect_answers.length;i++){
          answs.push(data.results[count].incorrect_answers[i])
        }
-       //shuffle answs
+       //answsをシャッフル
        var length = answs.length;
        for(var i = length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
@@ -76,7 +73,7 @@
         answs[i] = answs[j];
         answs[j] = tmp;
        }
-       // create DOM
+       //DOM生成処理
        for(var i =0;i<answs.length;i++){
          var dd = document.createElement('dd');
          var inp = document.createElement('input');
@@ -86,7 +83,7 @@
          inp.className="btn";
          inp.value = answs[i];
        }
-      }//buildAnsChoises end
+     }
     });
 })();
 
