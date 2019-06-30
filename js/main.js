@@ -24,12 +24,12 @@
      //クイズをセットする処理
      function setQuiz(data){
        let qsCount = count + 1;
-       genre.innerText = "[ジャンル] " + data.results[count].category;
-       genre.style.display = "block";
-       diff.innerText = "[難易度] " + data.results[count].difficulty;
-       diff.style.display = "block";
-       qs.innerText = data.results[count].question;
-       qsNum.innerText ="問題" + qsCount;
+       genre.textContent =  data.results[count].category;
+       genre.style.display = "inline-block";
+       diff.textContent =  data.results[count].difficulty;
+       diff.style.display = "inline-block";
+       qs.textContent = data.results[count].question;
+       qsNum.textContent ="問題" + qsCount;
 
        buildAnsChoises(data);
 
@@ -67,10 +67,11 @@
        const btns = Array.from(btn);
        btns.forEach(function(el){
          el.addEventListener('click',function(){
-           count ++;
+
            if(this.value === data.results[count].correct_answer){
-             score ++;
+              score ++;
            }
+           count ++;
            // １０問目が終了した時の表示
            if(count === 10){
               qsNum.innerHTML = "あなたの正解数は" + score + "です！";
@@ -82,5 +83,5 @@
            setQuiz(data);
         });
       });
-     }
+    }
 })();
